@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['admin_id'])) {
-     header('Location: dashboard.php');
+     header('Location: index.php');
      exit();
 }
 
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $db_password = $row['password'];
           if ($input_password === $db_password) {
                $_SESSION['admin_id'] = $db_username;
-               header('Location: dashboard.php');
+               header('Location: index.php');
                exit();
           }
      }

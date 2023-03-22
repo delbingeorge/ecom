@@ -1,26 +1,40 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
-     // If admin user is not logged in, redirect to login page
      header('Location: login.php');
      exit();
 }
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-     <title>Dashboard</title>
+     <title>Admin Dashboard</title>
      <link rel="stylesheet" href="style/admin-style.css">
+
 </head>
 
 <body>
-     <?php
-     include './components/nav.php'
-     ?>
+     <nav>
+          <a href="index.php">
+               <img src="../media/images/craftLogo.png">
+          </a>
+          <form method="post" action="logout.php">
+               <button type="submit" name="logout_btn" class="logout-btn"><img src="../media/icons/logout.png"></button>
+          </form>
+     </nav>
      <div class="dash-div">
+          <h1>Admin Dashboard</h1>
+          <div class="dash-div-btn">
+               <a href="./products/manageProducts.php" class="dash-btn">Manage Product</a>
+               <a href="./user/manageUsers.php" class="dash-btn">Manage user</a>
+               <a href="./order/manageOrder.php" class="dash-btn">Manage orders</a>
+               <a href="./feedback/feedback.php" class="dash-btn">View feedback</a>
+               <a href="" class="dash-btn">Generate Report</a>
+          </div>
           <div class="dash-news">
-               <h2>Orders</h2>
+               <h2>Latest Orders</h2>
                <?php
                // Set up database connection
                $servername = "localhost";
@@ -64,7 +78,6 @@ if (!isset($_SESSION['admin_id'])) {
                ?>
 
           </div>
-
      </div>
 </body>
 

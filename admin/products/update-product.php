@@ -13,16 +13,16 @@ if (!isset($_SESSION['admin_id'])) {
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Update Product</title>
-     <link rel="stylesheet" href="style/admin-style.css">
+     <link rel="stylesheet" href="../style/admin-style.css">
 </head>
 
 <body>
 <?php
-     include './components/nav.php'
+     include '../components/nav.php'
      ?>
      <div class="action-div" id="update">
           <h1>Update product</h1>
-          <form action="update.php" method="POST" class="product-form">
+          <form action="./update-product.php" method="POST" class="product-form">
                <input type="text" id="product_id" name="product_id" placeholder="Product ID" required>
                <input type="text" id="product_name" name="product_name" placeholder="Product Name" required>
                <input type="number" id="qty" name="qty" min="0" step="0.01" placeholder="Quantity" required>

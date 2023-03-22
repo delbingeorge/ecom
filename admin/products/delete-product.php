@@ -1,11 +1,11 @@
+
 <?php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
      header('Location: login.php');
      exit();
 }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,17 +13,17 @@ if (!isset($_SESSION['admin_id'])) {
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Delete Proudct</title>
-     <link rel="stylesheet" href="style/admin-style.css">
+     <link rel="stylesheet" href="../style/admin-style.css">
 </head>
 
 <body>
 <?php
-     include './components/nav.php'
+     include '../components/nav.php'
      ?>
      <div class="action-div" id="delete">
           <h1>Delete product</h1>
-          <form action="delete.php" method="POST" class="product-form">
-               <input type="text" id="id" name="id" placeholder="User ID" required>
+          <form action="./delete-product.php" method="POST" class="product-form">
+               <input type="text" id="product_id" name="product_id" placeholder="Product ID" required>
                <input type="submit" value="Delete">
           </form>
 
@@ -44,20 +44,20 @@ if (!isset($_SESSION['admin_id'])) {
 
 
           if (!empty($_POST)) {
-               $id = isset($_POST['id']) ? $_POST['id'] : '';
-               $sqlall = "SELECT id FROM customers";
+               $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : '';
+               $sqlall = "SELECT product_id FROM products";
                $result = $conn->query($sqlall);
                if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                         if ($row['id'] == $id) {
-                              $sql = "DELETE FROM customers WHERE id='$id'";
+                         if ($row['product_id'] == $product_id) {
+                              $sql = "DELETE FROM products WHERE product_id='$product_id'";
                               if (mysqli_query($conn, $sql)) {
-                                   echo "User Removed! <br> <a href='manageUser.php'>Go Back</a>";
+                                   echo "Product Removed! <br> <a href='manageproducts.php'>Go Back</a>";
                               } else {
                                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                               }
                          } else {
-                              echo "No matching user id found! <br> <a href='manageUser.php'>Go Back</a>";
+                              echo "No matching product found! <br> <a href='manageproducts.php'>Go Back</a>";
                          }
                     }
                } else {
