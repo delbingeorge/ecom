@@ -23,7 +23,7 @@ if (!isset($_SESSION['admin_id'])) {
           <div class="admin-head">
                <img class="admin-logo" src="https://cdn-icons-png.flaticon.com/512/1007/1007959.png" alt="">
                <h1>
-                    Manage Products
+                    Manage Orders
                </h1>
           </div>  <?php
                // Set up database connection

@@ -48,7 +48,6 @@ if (!isset($_SESSION['admin_id'])) {
           if (!empty($_POST)) {
                // $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : '';
                $product_name = isset($_POST['product_name']) ? $_POST['product_name'] : '';
-               $image = isset($_POST['image']) ? $_POST['image'] : '';
                $price = isset($_POST['price']) ? $_POST['price'] : '';
                $des = isset($_POST['description']) ? $_POST['description'] : '';
                $qty = isset($_POST['qty']) ? $_POST['qty'] : '';
@@ -63,7 +62,6 @@ if (!isset($_SESSION['admin_id'])) {
                     if (move_uploaded_file($image_tmp_name, $target_file)) {
                          $sql = "INSERT INTO products (product_name,image,price,description,qty) VALUES ('$product_name','$image_name','$price',' $des','$qty')";
                          if (mysqli_query($conn, $sql)) {
-                              echo "Product Added! <br> <a href='manageproducts.php'>Go Back</a>";
                               header("Location: manageProducts.php");
                          } else {
                               echo "Error: " . $sql . "<br>" . mysqli_error($conn);
