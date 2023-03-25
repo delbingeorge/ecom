@@ -29,7 +29,6 @@ if (!isset($_SESSION['admin_id'])) {
                <div>
                     <a href="./add-product.php" style="background-color: green;" class="dash-btn"> Add</a>
                     <a href="./update-product.php" class="dash-btn">Update</a>
-                    <a href="./delete-product.php" style="background-color: red;" class="dash-btn">Delete</a>
                </div>
                <div class="show-items">
                     <h2>All Products</h2>
