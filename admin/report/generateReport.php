@@ -9,7 +9,7 @@ if (!isset($_SESSION['admin_id'])) {
 <html lang="en">
 
 <head>
-     <title>User Feedbacks</title>
+     <title>User Info</title>
      <link rel="stylesheet" href="../style/admin-style.css">
 </head>
 
@@ -19,12 +19,17 @@ if (!isset($_SESSION['admin_id'])) {
      ?>
      <div class="dash-div">
      <div class="admin-head">
-               <img class="admin-logo" src="https://cdn-icons-png.flaticon.com/512/1151/1151511.png" alt="">
+               <img class="admin-logo" src="https://cdn-icons-png.flaticon.com/512/3192/3192618.png" alt="">
                <h1>
                     Manage Products
                </h1>
-          </div><div class="dash-div-btn">
+          </div>
+          <div class="dash-div-btn">
+               <div>
+                    <a href="remove-user.php" style="background-color: red;" class="dash-btn">Delete</a>
+               </div>
                <div class="show-items">
+                    <h2>All Users</h2>
                     <?php
                     // Set up database connection
                     $servername = "localhost";
@@ -34,30 +39,26 @@ if (!isset($_SESSION['admin_id'])) {
                     $conn = new mysqli($servername, $username, $password, $dbname);
 
                     // Query the database for the latest 10 items in the orders table
-                    $sql = "SELECT * FROM feedback";
+                    $sql = "SELECT * FROM customers";
                     $result = $conn->query($sql);
 
                     // Display the results in an HTML table
                     echo "<table class='order-news'>";
                     echo "<tr>
-               <th>Feedback ID</th>
-               <th>Username</th>
-               <th>Content</th>
-               <th>Date</th>
+               <th>User ID</th>
+               <th>User Name</th>
                <th>Email</th>
                </tr>";
                     if ($result->num_rows > 0) {
                          while ($row = $result->fetch_assoc()) {
                               echo "<tr class='order-res'>
-                         <td>" . $row["feedback_id"] . "</td>
-                         <td>" . $row["username"] . "</td>
-                         <td>" . $row["content"] . "</td>
-                         <td>" . $row["date"] . "</td>
+                         <td>" . $row["id"] . "</td>
+                         <td>" . $row["name"] . "</td>
                          <td>" . $row["email"] . "</td>
                          </tr>";
                          }
                     } else {
-                         echo "<tr><td colspan='4'>No results found.</td></tr>";
+                         echo "<tr><td colspan='6'>No results found.</td></tr>";
                     }
                     echo "</table>";
 

@@ -9,7 +9,7 @@ if (!isset($_SESSION['admin_id'])) {
 <html lang="en">
 
 <head>
-     <title>Manage Products</title>
+     <title>User Info</title>
      <link rel="stylesheet" href="../style/admin-style.css">
 </head>
 
@@ -18,49 +18,78 @@ if (!isset($_SESSION['admin_id'])) {
      include '../components/nav.php'
      ?>
      <div class="dash-div">
-          <h1>Manage Users</h1>
+          <div class="admin-head">
+               <img class="admin-logo" src="https://cdn-icons-png.flaticon.com/512/7542/7542177.png" alt="">
+               <h1>
+                    User Information
+               </h1>
+          </div>
           <div class="dash-div-btn">
-               <div>
-                    <a href="add-user.php" style="background-color: green;" class="dash-btn">Add</a>
-                    <a href="update-user.php" class="dash-btn">Update</a>
-                    <a href="delete-user.php" style="background-color: red;" class="dash-btn">Delete</a>
-               </div>
                <div class="show-items">
                     <h2>All Users</h2>
                     <?php
-                    // Set up database connection
+                    //Database Connection
                     $servername = "localhost";
                     $username = "root";
                     $password = "";
                     $dbname = "craftsmendb";
                     $conn = new mysqli($servername, $username, $password, $dbname);
 
-                    // Query the database for the latest 10 items in the orders table
-                    $sql = "SELECT * FROM customers";
+                    $sql = "SELECT * FROM users";
                     $result = $conn->query($sql);
-
-                    // Display the results in an HTML table
                     echo "<table class='order-news'>";
                     echo "<tr>
                <th>User ID</th>
-               <th>User Name</th>
+               <th>Username</th>
                <th>Email</th>
+               <th>Address</th>
+               <th>Contact Number</th>
+               <th>Remove</th>
                </tr>";
                     if ($result->num_rows > 0) {
                          while ($row = $result->fetch_assoc()) {
                               echo "<tr class='order-res'>
-                         <td>" . $row["id"] . "</td>
-                         <td>" . $row["name"] . "</td>
+                         <td>" . $row["Uid"] . "</td>
+                         <td>" . $row["username"] . "</td>
                          <td>" . $row["email"] . "</td>
+                         <td>" . $row["address"] . "</td>
+                         <td>" . $row["phoneNumber"] . "</td>
+                         <td>
+                         <form method='POST'>
+                              <input type='hidden' name='user_id' value='" . $row["Uid"] . "'>
+                              <button type='submit' class='del-btn'><img src='https://cdn-icons-png.flaticon.com/512/6861/6861362.png'/></button>
+                         </form>
+                     </td>
                          </tr>";
                          }
                     } else {
-                         echo "<tr><td colspan='4'>No results found.</td></tr>";
+                         echo "<tr><td colspan='6'>No results found.</td></tr>";
                     }
                     echo "</table>";
 
-                    // Close database connection
-                    $conn->close();
+                    $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : '';
+                    $sqlall = "SELECT uid FROM users";
+                    $result = $conn->query($sqlall);
+                    if ($result->num_rows > 0) {
+                         while ($row = $result->fetch_assoc()) {
+                              if ($row['uid'] == $user_id) {
+                                   $sql = "DELETE FROM users WHERE uid='$user_id'";
+                                   if (mysqli_query($conn, $sql)) {
+                                        echo "User Removed!";
+                                        header('Location: manageUsers.php');
+                                        exit();
+                                   } else {
+                                        echo "Failed to remove user!";
+                                   }
+                              } else {
+                                   echo "<script>alert(No matching user id found!)</script>";
+                              }
+                         }
+                    } else {
+                         echo "<script>alert(No user found!)</script>";
+                    }
+
+                    mysqli_close($conn);
                     ?>
                </div>
           </div>

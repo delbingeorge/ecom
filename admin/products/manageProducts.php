@@ -19,10 +19,15 @@ if (!isset($_SESSION['admin_id'])) {
      include '../components/nav.php'
      ?>
      <div class="dash-div">
-          <h1>Manage Product</h1>
+          <div class="admin-head">
+               <img class="admin-logo" src="https://cdn-icons-png.flaticon.com/512/3114/3114633.png" alt="">
+               <h1>
+                    Manage Products
+               </h1>
+          </div>
           <div class="dash-div-btn">
                <div>
-                    <a href="./add-product.php" style="background-color: green;" class="dash-btn">Add</a>
+                    <a href="./add-product.php" style="background-color: green;" class="dash-btn"> Add</a>
                     <a href="./update-product.php" class="dash-btn">Update</a>
                     <a href="./delete-product.php" style="background-color: red;" class="dash-btn">Delete</a>
                </div>
@@ -45,22 +50,55 @@ if (!isset($_SESSION['admin_id'])) {
                     echo "<tr>
                <th>Product ID</th>
                <th>Product Name</th>
-               <th>Qty</th>
+               <th>Image</th>
                <th>Price</th>
+               <th>Description</th>
+               <th>Qty</th>
+               <th>Remove</th>
                </tr>";
                     if ($result->num_rows > 0) {
                          while ($row = $result->fetch_assoc()) {
                               echo "<tr class='order-res'>
-                         <td>" . $row["product_id"] . "</td>
+                         <td>" . $row["p_id"] . "</td>
                          <td>" . $row["product_name"] . "</td>
-                         <td>" . $row["qty"] . "</td>
+                         <td>" . $row["image"] . "</td>
                          <td>" . $row["price"] . "</td>
+                         <td>" . $row["description"] . "</td>
+                         <td>" . $row["qty"] . "</td>
+                         <td>
+                         <form method='POST'>
+                              <input type='hidden' name='pid' value='" . $row["p_id"] . "'>
+                              <button type='submit' class='del-btn'><img src='https://cdn-icons-png.flaticon.com/512/6861/6861362.png'/></button>
+                         </form>
+                              </td>
+                         
                          </tr>";
                          }
                     } else {
-                         echo "<tr><td colspan='4'>No results found.</td></tr>";
+                         echo "<tr><td colspan='7'>No results found.</td></tr>";
                     }
                     echo "</table>";
+                    $pid = isset($_POST['pid']) ? $_POST['pid'] : '';
+                    $sqlall = "SELECT p_id FROM products";
+                    $result = $conn->query($sqlall);
+                    if ($result->num_rows > 0) {
+                         while ($row = $result->fetch_assoc()) {
+                              if ($row['p_id'] == $pid) {
+                                   $sql = "DELETE FROM products WHERE p_id='$pid'";
+                                   if (mysqli_query($conn, $sql)) {
+                                        echo "Product Removed!";
+                                        header('Location: manageProducts.php');
+                                        exit();
+                                   } else {
+                                        echo "Failed to remove product!";
+                                   }
+                              } else {
+                                   echo "<script>alert(No matching product id found!)</script>";
+                              }
+                         }
+                    } else {
+                         echo "<script>alert(No product found!)</script>";
+                    }
 
                     // Close database connection
                     $conn->close();

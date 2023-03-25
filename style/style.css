@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Rubik", sans-serif;
+    scroll-behavior: smooth;
+}
+
+::placeholder {
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+.admin-login-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url(https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80);
+    background-size: cover;
+}
+
+.login-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.292);
+}
+
+.login-form img {
+    width: 50px;
+    
+}
+
+.login-form h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"],
+.login-form input[type="email"] {
+    margin-left: 10px;
+    width: 45%;
+    padding: 15px;
+    border: none;
+    border-bottom: 3px solid black;
+    background-color: #1222ff00;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    outline: none;
+}
+
+.login-form input[type="submit"] {
+    display: block;
+    width: 30%;
+    font-size: 1.1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    background-color: rgb(8, 115, 255);
+    color: #fff;
+    letter-spacing: 3px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.login-form input[type="submit"]:hover {
+    background-color: #1222ff;
+}
+
+.invalid-msg {
+    margin-top: 20px;
+    color: red;
+}
+
+.log-div {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.form-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.log-div a {
+    color: black;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.log-div a:hover {
+    color: rgb(116, 70, 255);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+}

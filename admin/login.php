@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      if ($conn->connect_error) {
           die("Connection failed: " . $conn->connect_error);
      }
-     $sql = "SELECT adminname, password FROM admin WHERE adminname = '$input_username'";
+     $sql = "SELECT adminname, password FROM admin WHERE adminname = '$input_username' AND password='$input_password'";
      $result = $conn->query($sql);
 
      if ($result->num_rows === 1) {

@@ -52,12 +52,12 @@ if (!isset($_SESSION['admin_id'])) {
                          if ($row['id'] == $id) {
                               $sql = "DELETE FROM customers WHERE id='$id'";
                               if (mysqli_query($conn, $sql)) {
-                                   echo "User Removed! <br> <a href='manageUser.php'>Go Back</a>";
+                                   echo "User Removed! <br> <a href='../user/manageUsers.php'>Go Back</a>";
                               } else {
                                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                               }
                          } else {
-                              echo "No matching user id found! <br> <a href='manageUser.php'>Go Back</a>";
+                              echo "No matching user id found! <br> <a href='../user/manageUsers.php'>Go Back</a>";
                          }
                     }
                } else {

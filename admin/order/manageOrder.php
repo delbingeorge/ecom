@@ -20,8 +20,12 @@ if (!isset($_SESSION['admin_id'])) {
      ?>
      <div class="dash-div">
           <div class="dash-news">
-               <h2>Orders</h2>
-               <?php
+          <div class="admin-head">
+               <img class="admin-logo" src="https://cdn-icons-png.flaticon.com/512/1007/1007959.png" alt="">
+               <h1>
+                    Manage Products
+               </h1>
+          </div>  <?php
                // Set up database connection
                $servername = "localhost";
                $username = "root";
@@ -55,7 +59,7 @@ if (!isset($_SESSION['admin_id'])) {
                          </tr>";
                     }
                } else {
-                    echo "<tr><td colspan='4'>No results found.</td></tr>";
+                    echo "<tr><td colspan='6'>No results found.</td></tr>";
                }
                echo "</table>";
 

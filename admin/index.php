@@ -12,7 +12,6 @@ if (!isset($_SESSION['admin_id'])) {
 <head>
      <title>Admin Dashboard</title>
      <link rel="stylesheet" href="style/admin-style.css">
-
 </head>
 
 <body>
@@ -25,13 +24,18 @@ if (!isset($_SESSION['admin_id'])) {
           </form>
      </nav>
      <div class="dash-div">
-          <h1>Admin Dashboard</h1>
+          <div class="admin-head">
+               <img class="admin-logo" src="https://cdn-icons-png.flaticon.com/512/6995/6995809.png" alt="">
+               <h1>
+                    Admin Dashboard
+               </h1>
+          </div>
           <div class="dash-div-btn">
                <a href="./products/manageProducts.php" class="dash-btn">Manage Product</a>
-               <a href="./user/manageUsers.php" class="dash-btn">Manage user</a>
-               <a href="./order/manageOrder.php" class="dash-btn">Manage orders</a>
+               <a href="./user/manageUsers.php" class="dash-btn">User Info</a>
+               <a href="./order/manageOrder.php" class="dash-btn">Show orders</a>
                <a href="./feedback/feedback.php" class="dash-btn">View feedback</a>
-               <a href="" class="dash-btn">Generate Report</a>
+               <a href="./report/generateReport.php" class="dash-btn">Generate Report</a>
           </div>
           <div class="dash-news">
                <h2>Latest Orders</h2>
@@ -69,7 +73,7 @@ if (!isset($_SESSION['admin_id'])) {
                          </tr>";
                     }
                } else {
-                    echo "<tr><td colspan='4'>No results found.</td></tr>";
+                    echo "<tr><td colspan='6'>No results found.</td></tr>";
                }
                echo "</table>";
 
