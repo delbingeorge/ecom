@@ -11,7 +11,7 @@ if (!isset($_SESSION['admin_id'])) {
 
 <head>
      <title>Manage Products</title>
-     <link rel="stylesheet" href="../style/admin-style.css">
+     <link rel="stylesheet" href="../style/admin-style.css">  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2713/2713537.png" type="image/x-icon">
 </head>
 
 <body>

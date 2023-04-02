@@ -1,13 +1,14 @@
 <?php
 session_start();
-if (isset($_SESSION['uid'])) {
-     header('Location: index.php');
+if (!isset($_SESSION['uid'])) {
+     header("Location: login.php");
      exit();
 }
 
 if (isset($_POST['pid'])) {
      $pid = $_POST['pid'];
-     // $uid = $_SESSION['uid'];
+     $uid = $_SESSION['uid'];
+
 
      // Connect to database
      $servername = "localhost";
@@ -29,7 +30,6 @@ if (isset($_POST['pid'])) {
           $quantity = $row['quantity'] + 1;
           $sql = "UPDATE cart SET quantity = '$quantity' WHERE cart_id = '$cart_id'";
           if ($conn->query($sql) === TRUE) {
-               echo "<script>alert('Items Added to cart!');</script>";
                header("Location: index.php");
           } else {
                echo "Error updating cart: " . $conn->error;
@@ -41,12 +41,12 @@ if (isset($_POST['pid'])) {
           if ($result->num_rows > 0) {
                $row = $result->fetch_assoc();
                $product_name = $row['product_name'];
-               $quantity = 1;
+               $quantity = $_POST['qty'];
                $price = $row['price'];
+               $total = $row['price'] * $quantity;
                $image = $row['image'];
-               $sql = "INSERT INTO cart (p_id, uid, product_name, quantity, price, image) VALUES ('$pid', '$uid', '$product_name', '$quantity', '$price', '$image')";
+               $sql = "INSERT INTO cart (p_id, uid, product_name, quantity, price, image,total) VALUES ('$pid', '$uid', '$product_name', '$quantity', '$price', '$image','$total')";
                if ($conn->query($sql) === TRUE) {
-                    echo "<script>alert('Items Added to cart!');</script>";
                     header("Location: index.php");
                } else {
                     echo "Error adding to cart: " . $conn->error;

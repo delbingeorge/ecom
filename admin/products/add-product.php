@@ -13,7 +13,7 @@ if (!isset($_SESSION['admin_id'])) {
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Add Products</title>
-     <link rel="stylesheet" href="../style/admin-style.css">
+     <link rel="stylesheet" href="../style/admin-style.css">  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2713/2713537.png" type="image/x-icon">
 </head>
 
 <body>
