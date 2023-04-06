@@ -8,9 +8,6 @@ if (!isset($_SESSION['uid'])) {
 if (isset($_POST['pid'])) {
      $pid = $_POST['pid'];
      $uid = $_SESSION['uid'];
-
-
-     // Connect to database
      $servername = "localhost";
      $username = "root";
      $password = "";
@@ -28,7 +25,7 @@ if (isset($_POST['pid'])) {
           $row = $result->fetch_assoc();
           $cart_id = $row['cart_id'];
           $quantity = $row['quantity'] + 1;
-          $sql = "UPDATE cart SET quantity = '$quantity' WHERE cart_id = '$cart_id'";
+          $sql = "UPDATE cart SET quantity = '$quantity' WHERE uid = '$uid'";
           if ($conn->query($sql) === TRUE) {
                header("Location: index.php");
           } else {
@@ -40,16 +37,23 @@ if (isset($_POST['pid'])) {
           $result = $conn->query($sql);
           if ($result->num_rows > 0) {
                $row = $result->fetch_assoc();
+               $product_id = $row['p_id'];
                $product_name = $row['product_name'];
                $quantity = $_POST['qty'];
                $price = $row['price'];
                $total = $row['price'] * $quantity;
                $image = $row['image'];
-               $sql = "INSERT INTO cart (p_id, uid, product_name, quantity, price, image,total) VALUES ('$pid', '$uid', '$product_name', '$quantity', '$price', '$image','$total')";
-               if ($conn->query($sql) === TRUE) {
-                    header("Location: index.php");
+               if ($quantity > $row['qty']) {
+                    echo "Quantity is high!";
                } else {
-                    echo "Error adding to cart: " . $conn->error;
+                    $sql = "INSERT INTO cart (p_id, uid, product_name, quantity, price, image,total) VALUES ('$pid', '$uid', '$product_name', '$quantity', '$price', '$image','$total')";
+                    $updateQty = "UPDATE products  SET qty = qty-'$quantity' WHERE p_id = '$product_id'";
+                    if ($conn->query($sql) === TRUE) {
+                         $conn->query($updateQty);
+                         header("Location: index.php");
+                    } else {
+                         echo "Error adding to cart: " . $conn->error;
+                    }
                }
           } else {
                echo "Product not found!";

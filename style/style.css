@@ -91,6 +91,7 @@ nav ul li a img {
 }
 
 .login-form input[type="text"],
+.login-form input[type="number"],
 .login-form input[type="password"],
 .login-form input[type="email"] {
     margin-left: 10px;
@@ -101,7 +102,15 @@ nav ul li a img {
     background-color: #1222ff00;
     margin-bottom: 20px;
     font-size: 1.5rem;
+    text-align: center;
     outline: none;
+}
+
+.login-form input[type="text"]:focus::placeholder,
+.login-form input[type="number"]:focus::placeholder,
+.login-form input[type="password"]:focus::placeholder,
+.login-form input[type="email"]:focus::placeholder {
+    opacity: 0;
 }
 
 .login-form input[type="submit"] {
@@ -195,7 +204,7 @@ nav ul li a img {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .search-title {
@@ -215,10 +224,9 @@ nav ul li a img {
 }
 
 .product-card {
-    width: 20%;
-    height: 40%;
-    margin: 2rem 3rem;
-    padding: 1rem;
+    width: 25%;
+    margin: 2rem;
+    padding: 2rem 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -237,20 +245,23 @@ nav ul li a img {
 
 .product-card h1 {
     font-size: 1.5rem;
+    text-align: center;
 }
 
 .product-card h2 {
     color: #fda11c;
     font-size: 2rem;
-    margin: 5px 0;
+    margin: 10px 0;
+    text-align: center;
 }
 
-.btn-grp {
+/* .btn-grp {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-}
+    align-items: center;
+    justify-content: center;
+} */
 
 .add-to-cart-btn {
     padding: 10px 25px;
@@ -258,6 +269,8 @@ nav ul li a img {
     border: none;
     background-color: #fda11c;
     border-radius: 5px;
+    text-decoration: none;
+    color: white;
 }
 
 .add-to-cart-btn:hover {
@@ -267,7 +280,7 @@ nav ul li a img {
 }
 
 .view-dtls-btn {
-    padding: 9px 20px;
+    padding: 12px 40px;
     transition: 0.4s linear;
     outline: none;
     border: 2px solid #fe9400;
@@ -342,12 +355,20 @@ footer div ul li a img {
 
 .product-info h2 {
     width: 80%;
+
+    margin: 10px 0;
     font-weight: 100;
     font-size: 1rem;
 }
 
+.product-info h3 {
+    width: 80%;
+    font-weight: 100;
+    font-size: 1.3rem;
+}
+
 .product-info .price {
-    margin: 2rem 0;
+    margin: 1rem 0;
     color: #fe9400;
 }
 
@@ -414,8 +435,41 @@ footer div ul li a img {
     font-size: 1.5rem;
 }
 
+.user-info-div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 2rem 0;
+}
+
+.user-info-div img {
+    width: 100px;
+    height: 100px;
+}
+
+.user-info-div h1 {
+    font-size: 2rem;
+}
+
+.user-info-div h2 {
+    font-size: 1rem;
+}
+
+.user-info-div h3 {
+    font-size: 0.5rem;
+}
+
+.bill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
 .bill-div {
     min-height: 100vh;
+    width: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -439,4 +493,47 @@ footer div ul li a img {
     font-size: 1rem;
     padding: 10px 55px;
     text-align: center;
+}
+
+.bill-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.bill-info div {
+    margin-top: 5px;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bill-info div h1 {
+    font-size: 15px;
+}
+
+.alert {
+    width: 20%;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    box-shadow: 0px 1px 8px 0px rgb(0 0 0 / 20%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+    position: absolute;
+}
+
+.alert img {
+    width: 10%;
+    background-color: whitesmoke;
+    border-radius: 20px;
+    box-shadow: 0px 1px 8px 0px rgb(0 0 0 / 20%);
+}
+
+.alert h1 {
+    font-size: 1rem;
 }

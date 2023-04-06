@@ -54,6 +54,7 @@ include './components/nav.php';
                                    <h2 class='qty'> Qty: " . $row['quantity'] . "</h2>
                                    <form method='POST' action='deleteItem.php'>
                                         <input type='hidden' name='del_pid' value='" . $row["p_id"] . "'>
+                                        <input type='hidden' name='item_qty' value='" . $row["quantity"] . "'>
                                         <button type='submit' class='add-to-cart-btn'>Remove</button>
                                    </form>
                     </div>";
@@ -72,15 +73,19 @@ include './components/nav.php';
           $row = $sum->fetch_assoc();
           $total_sum = $row["total_sum"];
      }
-     echo "</div>
-     <div class='place-order-div'>
+     if ($total_sum > 0) {
+          echo "</div>
+          <div class='place-order-div'>
           <div>
-               <h1><span>₹</span>" . $total_sum .  " </h1>
+          <h1><span>₹</span>" . $total_sum .  " </h1>
           </div>
           <form method='POST' action='placeOrder.php'>
-               <button type='submit' class='add-to-cart-btn'>Place Order</button>
+          <button type='submit' class='add-to-cart-btn'>Place Order</button>
           </form>
-     </div>";
+          </div>";
+     } else {
+          echo "<div></div>";
+     }
      ?>
      </div>
      </div>

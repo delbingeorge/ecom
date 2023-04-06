@@ -4,6 +4,15 @@ if (!isset($_SESSION['uid'])) {
      header("Location: login.php");
      exit();
 }
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "craftsmendb";
+$conn = new mysqli($servername, $username, $password, $dbname);
+$uid = $_SESSION['uid'];
+if ($conn->connect_error) {
+     die("Connection failed: " . $conn->connect_error);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,39 +27,57 @@ if (!isset($_SESSION['uid'])) {
 </head>
 
 <body>
-     <div class="bill-div">
-          <h1>
-               Total Bill
-          </h1>
-          <table border='1'>
-               <tr>
-                    <th>
-                         Product Name
-                    </th>
-                    <th>
-                         Quantity
-                    </th>
-                    <th>Price/item</th>
-                    <th>Total Price</th>
-               </tr>
-               <?php
-               $servername = "localhost";
-               $username = "root";
-               $password = "";
-               $dbname = "craftsmendb";
-               $conn = new mysqli($servername, $username, $password, $dbname);
-               $uid = $_SESSION['uid'];
-               if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-               }
-               $query = isset($_GET['query']) ? $_GET['query'] : '';
+     <div class="bill">
+          <div class="bill-div">
+               <div>
+                    <img style="width: 150px; height: 60px;" src="media/images/craftLogo.png" />
+               </div>
+               <div class='bill-info'>
+                    <?php
+                    $sql = "SELECT * FROM users WHERE uid ='$uid'";
+                    $result = $conn->query($sql);
 
-               $sql = "SELECT * FROM cart WHERE uid ='$uid'";
-               $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                         while ($row = $result->fetch_assoc()) {
+                              echo "
+                         <div>
+                              <h1>Name:</h1><h1>" . $row['username'] . "</h1>
+                         </div>
+                         <div>
+                              <h1>Email:</h1><h1>" . $row['email'] . "</h1>
+                         </div>
+                         <div>
+                              <h1>Contact Info:</h1><h1>" . $row['phoneNumber'] . "</h1>
+                         </div>
+                         <div>
+                              <h1>Address:</h1><h1>" . $row['address'] . "</h1>
+                         </div>
+                         ";
+                         }
+                    } else {
+                         echo "No Results!";
+                    }
+                    ?>
+               </div>
 
-               if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                         echo "
+               <table border='1'>
+                    <tr>
+                         <th>
+                              Product Name
+                         </th>
+                         <th>
+                              Quantity
+                         </th>
+                         <th>Price/item</th>
+                         <th>Total Price</th>
+                    </tr>
+                    <?php
+                    $sql = "SELECT * FROM cart WHERE uid ='$uid'";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                         while ($row = $result->fetch_assoc()) {
+                              echo "
                     <tr>
                          <td> " . $row['product_name'] . "</td>
                          <td> " . $row['quantity'] . "</td>
@@ -59,14 +86,15 @@ if (!isset($_SESSION['uid'])) {
                     </tr>
               
                ";
+                         }
+                    } else {
+                         echo "No Results!";
                     }
-               } else {
-                    echo "No Results!";
-               }
-               $conn->close();
-               ?>
-          </table>
-          <button class='add-to-cart-btn'>Check Out</button>
+                    $conn->close();
+                    ?>
+               </table>
+               <a href="checkout.php" class='add-to-cart-btn'>Check Out</a>
+          </div>
      </div>
 </body>
 

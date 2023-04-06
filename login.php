@@ -12,15 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      if ($conn->connect_error) {
           die("Connection failed: " . $conn->connect_error);
      }
-     $sql = "SELECT uid, username, email, password FROM users WHERE email = '$input_email' AND password='$input_password'";
-     $result = $conn->query($sql);
+     $stmt = $conn->prepare("SELECT uid, username, email, password FROM users WHERE email = ?");
+     $stmt->bind_param("s", $input_email);
+     $stmt->execute();
+     $result = $stmt->get_result();
 
      if ($result->num_rows === 1) {
           $row = $result->fetch_assoc();
           $db_uid = $row['uid'];
           $db_username = $row['username'];
           $db_email = $row['email'];
-          if ($input_password === $row['password'] && $input_email === $db_email) {
+          $db_password = $row['password'];
+          if ($input_password === $db_password && $input_email === $db_email) {
                $_SESSION['uid'] = $db_uid;
                $_SESSION['username'] = $db_username;
                $_SESSION['email'] = $db_email;
@@ -33,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>

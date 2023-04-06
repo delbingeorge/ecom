@@ -22,16 +22,34 @@ if (!empty($_POST)) {
      $address = isset($_POST['address']) ? $_POST['address'] : '';
      $contact = isset($_POST['contact']) ? $_POST['contact'] : '';
 
-     $sql = "INSERT INTO users (username,email,password, address,PhoneNumber) VALUES ('$username','$email','$password', '$password','$contact')";
-     if (mysqli_query($conn, $sql)) {
-          header("Location:login.php");
+     // validate email
+     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+          $error_message = "Invalid email format";
+     } elseif (!preg_match('/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $email)) {
+          $error_message = "Invalid email format";
+     } elseif (strlen($password) < 8) {
+          $error_message = "Password must be at least 8 characters long";
+     } elseif ($password != $cpassword) {
+          $error_message = "Passwords do not match";
      } else {
-          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          // check if email already exists in database
+          $email_exists_query = "SELECT * FROM users WHERE email = '$email'";
+          $result = mysqli_query($conn, $email_exists_query);
+          if (mysqli_num_rows($result) > 0) {
+               $error_message = "Email already exists";
+          } else {
+               // insert user data into database
+               $sql = "INSERT INTO users (username, email, password, address, PhoneNumber) VALUES ('$username', '$email', '$password', '$address', '$contact')";
+               if (mysqli_query($conn, $sql)) {
+                    header("Location:login.php");
+               } else {
+                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+               }
+          }
      }
 }
 mysqli_close($conn);
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -47,23 +65,23 @@ mysqli_close($conn);
 
                <h1>Create Account</h1>
                <div class="form-div">
-                    <input placeholder="username" type="text" autocomplete="off" id="username" name="username" required>
-                    <input placeholder="email" type="email" autocomplete="off" id="email" name="email" required>
+                    <input placeholder="full name" type="text" autocomplete="off" id="username" name="username" required>
+                    <input placeholder="email address" type="email" autocomplete="off" id="email" name="email" required>
                </div>
                <div class="form-div">
                     <input placeholder="password" type="password" autocomplete="off" id="password" name="password" required>
-                    <input placeholder="confirm" type="password" autocomplete="off" id="cpassword" name="cpassword" required>
+                    <input placeholder="confirm password" type="password" autocomplete="off" id="cpassword" name="cpassword" required>
                </div>
                <div class="form-div">
-                    <input placeholder="address" type="text" autocomplete="off" id="address" name="address" required>
-                    <input placeholder="number" type="text" autocomplete="off" id="contact" name="contact" required>
+                    <input placeholder="delivery address" type="text" autocomplete="off" id="address" name="address" required>
+                    <input placeholder="contact number" type="number" autocomplete="off" maxlength="10" id="contact" name="contact" required>
                </div>
-               <input type="submit" value="Login">
+               <input type="submit" value="Create Account">
                <?php if (isset($error_message)) { ?>
                     <p class="invalid-msg"><?php echo $error_message; ?></p>
                <?php } ?>
                <div class="log-div">
-                    <a href="login.php">already have an account</a>
+                    <a href="login.php">Already have an account?</a>
                </div>
           </form>
      </div>

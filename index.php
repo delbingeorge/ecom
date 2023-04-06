@@ -56,11 +56,6 @@ if (!isset($_SESSION['uid'])) {
                               <h1 class='product-name'>" . $row['product_name'] . "</h1>
                               <h2 class='product-price'> ₹" . $row['price'] . "</h2>
                               <div class='btn-grp'>
-                                   <form method='POST' action='cart.php'>
-                                        <input type='hidden' name='qty' value='1'>
-                                        <input type='hidden' name='pid' value='" . $row["p_id"] . "'>
-                                        <button type='submit' class='add-to-cart-btn'>Add To Cart</button>
-                                   </form>
                                    <form method='POST' action='product-details.php'>
                                         <input type='hidden' name='pid' value='" . $row["p_id"] . "'>
                                         <button type='submit' class='view-dtls-btn'>View Details</button>
@@ -78,6 +73,13 @@ if (!isset($_SESSION['uid'])) {
      <?php
      include './components/footer.php';
      ?>
+
+     <!-- <form method='POST' action='cart.php'>
+                                        <input type='hidden' name='qty' value='1'>
+                                        <input type='hidden' name='pid' value='" . $row["p_id"] . "'>
+                                        <button type='submit' class='add-to-cart-btn'>Add To Cart</button>
+                                   </form>      -->
+
 </body>
 
 </html>
