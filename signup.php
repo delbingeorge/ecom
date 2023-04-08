@@ -22,30 +22,34 @@ if (!empty($_POST)) {
      $address = isset($_POST['address']) ? $_POST['address'] : '';
      $contact = isset($_POST['contact']) ? $_POST['contact'] : '';
 
-     // validate email
-     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-          $error_message = "Invalid email format";
-     } elseif (!preg_match('/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $email)) {
-          $error_message = "Invalid email format";
-     } elseif (strlen($password) < 8) {
-          $error_message = "Password must be at least 8 characters long";
-     } elseif ($password != $cpassword) {
-          $error_message = "Passwords do not match";
-     } else {
-          // check if email already exists in database
-          $email_exists_query = "SELECT * FROM users WHERE email = '$email'";
-          $result = mysqli_query($conn, $email_exists_query);
-          if (mysqli_num_rows($result) > 0) {
-               $error_message = "Email already exists";
+     try {
+          // validate email
+          if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+               throw new Exception("Invalid email format");
+          } elseif (!preg_match('/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $email)) {
+               throw new Exception("Invalid email format");
+          } elseif (strlen($password) < 8) {
+               throw new Exception("Password must be at least 8 characters long");
+          } elseif ($password != $cpassword) {
+               throw new Exception("Passwords do not match");
           } else {
-               // insert user data into database
-               $sql = "INSERT INTO users (username, email, password, address, PhoneNumber) VALUES ('$username', '$email', '$password', '$address', '$contact')";
-               if (mysqli_query($conn, $sql)) {
-                    header("Location:login.php");
+               // check if email already exists in database
+               $email_exists_query = "SELECT * FROM users WHERE email = '$email'";
+               $result = mysqli_query($conn, $email_exists_query);
+               if (mysqli_num_rows($result) > 0) {
+                    throw new Exception("Email already exists");
                } else {
-                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    // insert user data into database
+                    $sql = "INSERT INTO users (username, email, password, address, PhoneNumber) VALUES ('$username', '$email', '$password', '$address', '$contact')";
+                    if (mysqli_query($conn, $sql)) {
+                         header("Location:login.php");
+                    } else {
+                         throw new Exception("Error: " . $sql . "<br>" . mysqli_error($conn));
+                    }
                }
           }
+     } catch (Exception $e) {
+          $error_message = $e->getMessage();
      }
 }
 mysqli_close($conn);

@@ -18,29 +18,33 @@ if (!isset($_SESSION['uid'])) {
 </head>
 
 <body>
+
      <?php
      include './components/nav.php';
-     ?> <div class="div-head">
+     ?>
+
+     <div class="div-head">
           <h1>Your Profile</h1>
      </div>
-     <?php
-     $servername = "localhost";
-     $username = "root";
-     $password = "";
-     $dbname = "craftsmendb";
-     $uid = $_SESSION['uid'];
-     $conn = new mysqli($servername, $username, $password, $dbname);
-     if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
-     }
-     $query = isset($_GET['query']) ? $_GET['query'] : '';
+     <div style="display:flex; align-items:center; justify-content:center; flex-direction:column;">
+          <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "craftsmendb";
+          $uid = $_SESSION['uid'];
+          $conn = new mysqli($servername, $username, $password, $dbname);
+          if ($conn->connect_error) {
+               die("Connection failed: " . $conn->connect_error);
+          }
+          $query = isset($_GET['query']) ? $_GET['query'] : '';
 
-     $sql = "SELECT * FROM users WHERE uid='$uid'";
-     $result = $conn->query($sql);
+          $sql = "SELECT * FROM users WHERE uid='$uid'";
+          $result = $conn->query($sql);
 
-     if ($result->num_rows > 0) {
-          while ($row = $result->fetch_assoc()) {
-               echo "<div class='user-info-div'>
+          if ($result->num_rows > 0) {
+               while ($row = $result->fetch_assoc()) {
+                    echo "<div class='user-info-div'>
                <img src='https://cdn-icons-png.flaticon.com/512/456/456212.png'/>
                <h1> 
                " . $row['username'] . "
@@ -55,22 +59,25 @@ if (!isset($_SESSION['uid'])) {
                " . $row['phoneNumber'] . "
                </h2>
                </div>";
+               }
+          } else {
+               echo "";
           }
-     } else {
-          echo "";
-     }
-     ?>
+          ?>
+          <div>
+               <a class="add-to-cart-btn" href="edit-profile.php">Update Profile</a>
+               <a class="add-to-cart-btn" href="delete-profile.php">Delete Account</a>
+          </div>
 
-     <div>
-          <h1>Past Orders</h1>
-          <?php
-
-          $sql = "SELECT * FROM orders WHERE u_id='$uid'";
-          $result = $conn->query($sql);
-          if ($result->num_rows > 0) {
-               while ($row = $result->fetch_assoc()) {
-                    $image_path = "./admin/products/uploads/" . $row['image'];
-                    echo "
+          <div style="text-align: center;">
+               <h1 style="margin-top:2rem;">Past Orders</h1>
+               <?php
+               $sql = "SELECT * FROM orders WHERE u_id='$uid'";
+               $result = $conn->query($sql);
+               if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                         $image_path = "./admin/products/uploads/" . $row['image'];
+                         echo "
                     <div class='product-card'>
                          <img src='" . $image_path . "'/>
                          <h1 class='product-name'>" . $row['product_name'] . "</h1>
@@ -87,11 +94,12 @@ if (!isset($_SESSION['uid'])) {
                               </form>
                          </div>
                     </div>";
+                    }
+               } else {
+                    echo "<p>No Results!</p>";
                }
-          } else {
-               echo "No Results!";
-          }
-          ?>
+               ?>
+          </div>
      </div>
 </body>
 

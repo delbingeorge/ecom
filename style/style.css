@@ -504,6 +504,7 @@ footer div ul li a img {
 }
 
 .bill-info div {
+    text-align: center;
     margin-top: 5px;
     width: 50%;
     display: flex;

@@ -49,14 +49,14 @@ if (!isset($_SESSION['admin_id'])) {
                     if ($result->num_rows > 0) {
                          while ($row = $result->fetch_assoc()) {
                               echo "<tr class='order-res'>
-                         <td>" . $row["Uid"] . "</td>
+                         <td>" . $row["uid"] . "</td>
                          <td>" . $row["username"] . "</td>
                          <td>" . $row["email"] . "</td>
                          <td>" . $row["address"] . "</td>
                          <td>" . $row["phoneNumber"] . "</td>
                          <td>
                          <form method='POST'>
-                              <input type='hidden' name='user_id' value='" . $row["Uid"] . "'>
+                              <input type='hidden' name='user_id' value='" . $row["uid"] . "'>
                               <button type='submit' class='del-btn'><img src='https://cdn-icons-png.flaticon.com/512/6861/6861362.png'/></button>
                          </form>
                      </td>

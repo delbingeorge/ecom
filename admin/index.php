@@ -64,12 +64,12 @@ if (!isset($_SESSION['admin_id'])) {
                if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                          echo "<tr class='order-res'>
-                         <td>" . $row["id"] . "</td>
-                         <td>" . $row["customer_id"] . "</td>
-                         <td>" . $row["product_name"] . "</td>
+                         <td>" . $row["o_id"] . "</td>
+                         <td>" . $row["u_id"] . "</td>
+                         <td>" . $row["p_name"] . "</td>
                          <td>" . $row["created_at"] . "</td>
-                         <td>" . $row["quantity"] . "</td>
-                         <td>" . $row["price"] . "</td>
+                         <td>" . $row["address"] . "</td>
+                         <td>" . $row["phoneNumber"] . "</td>
                          </tr>";
                     }
                } else {

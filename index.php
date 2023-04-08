@@ -43,7 +43,7 @@ if (!isset($_SESSION['uid'])) {
                     die("Connection failed: " . $conn->connect_error);
                }
                $query = isset($_GET['query']) ? $_GET['query'] : '';
-
+               
                $sql = "SELECT * FROM products WHERE product_name LIKE '%$query%'";
                $result = $conn->query($sql);
 

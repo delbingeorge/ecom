@@ -2,38 +2,55 @@
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-     $input_email = $_POST['email'];
-     $input_password = $_POST['password'];
+     $input_email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+     $input_password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+     // Validate input email
+     if (!filter_var($input_email, FILTER_VALIDATE_EMAIL)) {
+          $error_message = "Invalid email address";
+     }
+
      $host = 'localhost';
      $username = 'root';
      $password = '';
      $dbname = 'craftsmendb';
-     $conn = new mysqli($host, $username, $password, $dbname);
-     if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
-     }
-     $stmt = $conn->prepare("SELECT uid, username, email, password FROM users WHERE email = ?");
-     $stmt->bind_param("s", $input_email);
-     $stmt->execute();
-     $result = $stmt->get_result();
 
-     if ($result->num_rows === 1) {
-          $row = $result->fetch_assoc();
-          $db_uid = $row['uid'];
-          $db_username = $row['username'];
-          $db_email = $row['email'];
-          $db_password = $row['password'];
-          if ($input_password === $db_password && $input_email === $db_email) {
-               $_SESSION['uid'] = $db_uid;
-               $_SESSION['username'] = $db_username;
-               $_SESSION['email'] = $db_email;
-               header('Location: index.php');
-               exit();
+     try {
+          $conn = new mysqli($host, $username, $password, $dbname);
+          if ($conn->connect_error) {
+               throw new Exception("Connection failed: " . $conn->connect_error);
           }
-     } else {
-          $error_message = 'Invalid username or password';
+
+          $stmt = $conn->prepare("SELECT uid, username, email, password FROM users WHERE email = ?");
+          $stmt->bind_param("s", $input_email);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          if ($result->num_rows === 1) {
+               $row = $result->fetch_assoc();
+               $db_uid = $row['uid'];
+               $db_username = $row['username'];
+               $db_email = $row['email'];
+               $db_password = $row['password'];
+
+               // Verify input password
+               if ($input_password == $db_password && $input_email === $db_email) {
+                    $_SESSION['uid'] = $db_uid;
+                    $_SESSION['username'] = $db_username;
+                    $_SESSION['email'] = $db_email;
+                    header('Location: index.php');
+                    exit();
+               } else {
+                    $error_message = "Invalid email or password";
+               }
+          } else {
+               $error_message = "Invalid email or password";
+          }
+
+          $conn->close();
+     } catch (Exception $e) {
+          $error_message = $e->getMessage();
      }
-     $conn->close();
 }
 ?>
 
@@ -61,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                }
                ?>
                <div class="log-div">
-                    <a href="forgotpass.php">forgot password!</a>
+                    <!-- <a href="forgotpass.php">forgot password!</a> -->
                     <a href="signup.php">create account</a>
                </div>
           </form>
