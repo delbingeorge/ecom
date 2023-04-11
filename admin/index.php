@@ -39,18 +39,16 @@ if (!isset($_SESSION['admin_id'])) {
           <div class="dash-news">
                <h2>Latest Orders</h2>
                <?php
-               // Set up database connection
+
                $servername = "localhost";
                $username = "root";
                $password = "";
                $dbname = "craftsmendb";
                $conn = new mysqli($servername, $username, $password, $dbname);
 
-               // Query the database for the latest 10 items in the orders table
                $sql = "SELECT * FROM orders ORDER BY created_at DESC LIMIT 10";
                $result = $conn->query($sql);
 
-               // Display the results in an HTML table
                echo "<table class='order-news'>";
                echo "<tr>
                <th>Order ID</th>
@@ -74,7 +72,7 @@ if (!isset($_SESSION['admin_id'])) {
                          </tr>";
                     }
                } else {
-                    echo "<tr><td colspan='6'>No results found.</td></tr>";
+                    echo "<tr><td colspan='7'>No results found.</td></tr>";
                }
                echo "</table>";
 

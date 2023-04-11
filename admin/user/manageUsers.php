@@ -75,14 +75,13 @@ if (!isset($_SESSION['admin_id'])) {
                               if ($row['uid'] == $user_id) {
                                    $sql = "DELETE FROM users WHERE uid='$user_id'";
                                    if (mysqli_query($conn, $sql)) {
-                                        echo "User Removed!";
-                                        header('Location: manageUsers.php');
+                                        echo "<script>alert('User Removed.');</script>";
+                                        echo "<script>window.location.href='manageUsers.php'</script>";
                                         exit();
                                    } else {
-                                        echo "Failed to remove user!";
+                                        echo "<script>alert('Failed to remove user.');</script>";
+                                        echo "<script>window.location.href='manageUsers.php'</script>";
                                    }
-                              } else {
-                                   echo "<script>alert(No matching user id found!)</script>";
                               }
                          }
                     } else {

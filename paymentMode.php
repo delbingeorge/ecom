@@ -5,11 +5,10 @@ if (!isset($_SESSION['uid'])) {
      exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-     $payment_mode = isset($_POST['payment_mode']) ? $_POST['payment_mode'] : '';
+if (isset($_POST['submit'])) {
+     $payment_mode = isset($_POST['payment-mode']) ? $_POST['payment-mode'] : 'erre';
      $uid = $_SESSION['uid'];
      $cart_items = [];
-
      $host = 'localhost';
      $username = 'root';
      $password = '';
@@ -57,6 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      }
      $query = "DELETE FROM cart WHERE uid = '$uid'";
      mysqli_query($conn, $query);
+     if ($payment_mode == "upiPayment") {
+          header("Location: upiPayment.php");
+     } elseif ($payment_mode == "creditCard") {
+          header("Location: creditCard.php");
+     } elseif ($payment_mode == "cod") {
+          header("Location: cod.php");
+     }
 }
 
 ?>
@@ -143,32 +149,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-
-     <?php
-
-
-     ?>
-     <form id="payment-form" method="POST">
+     <form action="paymentMode.php" id="payment-form" method="POST">
           <h1>Select your payment Mode</h1>
           <div>
-               <input type="radio" name="payment-mode" value="upiPayment"> UPI Payment
+               <input type="radio" name="payment-mode" value="upiPayment" checked>UPI Payment
           </div>
           <div>
-               <input type="radio" name="payment-mode" value="creditCard"> Bank Transfer
+               <input type="radio" name="payment-mode" value="creditCard">Bank Transfer
           </div>
           <div>
-               <input type="radio" name="payment-mode" value="cod"> COD
+               <input type="radio" name="payment-mode" value="cod">COD
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit" value="Submit" name="submit">Submit</button>
      </form>
-     <script>
-          const form = document.getElementById("payment-form");
-          form.addEventListener("submit", function(event) {
-               event.preventDefault();
-               const paymentMode = document.querySelector('input[name="payment-mode"]:checked').value;
-               window.location.href = `${paymentMode}.php`;
-          });
-     </script>
+
 </body>
 
 </html>

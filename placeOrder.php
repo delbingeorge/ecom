@@ -63,7 +63,7 @@ try {
           throw new Exception("Error: " . $sql . "<br>" . $conn->error);
      }
 } catch (Exception $e) {
-     echo "Error: " . $e->getMessage();
+     echo "";
 }
 
 ?>
@@ -129,15 +129,15 @@ try {
                          <th>Total Price</th>
                     </tr>
                     <?php
-                    $sql = "SELECT * FROM cart WHERE uid ='$uid'";
+                    $sql = "SELECT * FROM orders WHERE uid ='$uid'";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
                          while ($row = $result->fetch_assoc()) {
                               echo "
                     <tr>
-                         <td> " . $row['product_name'] . "</td>
-                         <td> " . $row['quantity'] . "</td>
+                         <td> " . $row['p_name'] . "</td>
+                         <td> " . $row['qty'] . "</td>
                          <td> " . $row['price'] . "</td>
                          <td> " . $row['total'] . "</td>
                     </tr>
@@ -151,8 +151,8 @@ try {
                     ?>
                </table>
                <div>
-                    <!-- <a href="generate-pdf.php" class="add-to-cart-btn" target="_blank">Download PDF</a> -->
-                    <a href="checkout.php" class='add-to-cart-btn'>Check Out</a>
+                    <a href="generate-pdf.php" class="add-to-cart-btn" target="_blank">Download PDF</a>
+                    <!-- <a href="check out.php" class='add-to-cart-btn'>Check Out</a> -->
                </div>
 
           </div>

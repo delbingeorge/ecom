@@ -36,7 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header('Location: index.php');
                     exit();
                } else {
-                    $error_message = 'Invalid username or password';
+                    echo "<script>alert('Incorrect username or password!');</script>";
+                    echo "<script>window.location.href='login.php'</script>";
                }
           } catch (PDOException $e) {
                $error_message = 'Database error: ' . $e->getMessage();
@@ -69,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                <?php } ?>
           </form>
           <div class="log-div">
-               <a href="../index.php">login as customer</a>
+               <a href="../index.php" style="text-decoration:none; font-weight: 600; color:black;">login as customer</a>
           </div>
      </div>
 </body>

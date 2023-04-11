@@ -29,7 +29,9 @@ if (isset($_POST['pid'])) {
                $price = $row['price'];
                $quantity = $row['quantity'] + 1;
                $sql = "UPDATE cart SET quantity = '$quantity', total=total+'$price' WHERE uid = '$uid' AND p_id= '$pid'";
-               if ($conn->query($sql) === TRUE) {
+               $updateQty = "UPDATE products  SET qty = qty-'$quantity' WHERE p_id = '$pid'";
+               if ($conn->query($sql) == TRUE) {
+                    $conn->query($updateQty);
                     header("Location: index.php");
                } else {
                     throw new Exception("Error updating cart: " . $conn->error);

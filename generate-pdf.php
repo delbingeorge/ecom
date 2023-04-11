@@ -68,14 +68,14 @@ $pdf->Cell(40, 10, 'Total Price', 1);
 $pdf->Ln();
 
 // Retrieve the data from the database and add it to the PDF
-$sql = "SELECT * FROM cart WHERE uid ='$uid'";
+$sql = "SELECT * FROM orders WHERE uid ='$uid'";
 $result = $conn->query($sql);
 
 $pdf->SetFont('Arial', 'B', 15);
 if ($result->num_rows > 0) {
      while ($row = $result->fetch_assoc()) {
-          $pdf->Cell(80, 10, $row['product_name'], 1);
-          $pdf->Cell(30, 10, $row['quantity'], 1);
+          $pdf->Cell(80, 10, $row['p_name'], 1);
+          $pdf->Cell(30, 10, $row['qty'], 1);
           $pdf->Cell(40, 10, $row['price'], 1);
           $pdf->Cell(40, 10, $row['total'], 1);
           $pdf->Ln();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2023 at 03:29 PM
+-- Generation Time: Apr 11, 2023 at 06:35 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -39,19 +39,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`adminid`, `adminname`, `email`, `password`) VALUES
-(142134, 'admin', 'dummy@gmail.com', 'aaa');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `blacklistedusers`
---
-
-CREATE TABLE `blacklistedusers` (
-  `Uid` int(11) NOT NULL,
-  `email` varchar(30) NOT NULL,
-  `phoneNumber` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(1, 'admin', 'yedupj@gmail.com', 'aaa');
 
 -- --------------------------------------------------------
 
@@ -61,34 +49,13 @@ CREATE TABLE `blacklistedusers` (
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
-  `p_id` varchar(15) DEFAULT NULL,
+  `p_id` int(20) DEFAULT NULL,
   `uid` varchar(15) DEFAULT NULL,
   `product_name` varchar(100) NOT NULL,
   `quantity` varchar(10) NOT NULL,
   `price` int(11) NOT NULL,
   `image` varchar(100) NOT NULL,
   `total` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`cart_id`, `p_id`, `uid`, `product_name`, `quantity`, `price`, `image`, `total`) VALUES
-(129, '15', '25', 'Axe Pro Max', '1', 10, 'Screenshot 2023-04-06 174718.png', 10);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `customers`
---
-
-CREATE TABLE `customers` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -99,7 +66,7 @@ CREATE TABLE `customers` (
 
 CREATE TABLE `feedback` (
   `feedback_id` int(11) NOT NULL,
-  `username` varchar(32) NOT NULL,
+  `username` varchar(20) NOT NULL,
   `content` varchar(256) NOT NULL,
   `date` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL
@@ -110,7 +77,7 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`feedback_id`, `username`, `content`, `date`, `email`) VALUES
-(13131, 'yedu', 'Thanks!', '2023-10-10', 'yedupj@gmail.com');
+(21, 'Yedu PJ', 'VERY GOOD PAINT!', '2023-04-11 18:13:35', 'yedupj@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -119,23 +86,28 @@ INSERT INTO `feedback` (`feedback_id`, `username`, `content`, `date`, `email`) V
 --
 
 CREATE TABLE `orders` (
-  `o_id` varchar(15) NOT NULL,
-  `u_id` varchar(15) DEFAULT NULL,
-  `transaction_info` varchar(20) NOT NULL,
+  `o_id` int(15) NOT NULL,
+  `uid` int(11) DEFAULT NULL,
   `p_name` varchar(15) NOT NULL,
-  `phoneNumber` int(10) NOT NULL,
+  `phoneNumber` varchar(10) NOT NULL,
   `email` varchar(20) NOT NULL,
   `address` varchar(15) NOT NULL,
   `payment_mode` varchar(20) NOT NULL,
-  `created_at` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `image` varchar(50) NOT NULL,
+  `total` int(11) NOT NULL,
+  `qty` int(5) NOT NULL,
+  `price` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`o_id`, `u_id`, `transaction_info`, `p_name`, `phoneNumber`, `email`, `address`, `payment_mode`, `created_at`) VALUES
-('Order642ec759c6', '25', 'Total Price:10', 'Axe Pro Max', 896858943, 'olivia.thompson@gmai', ' 123 Main St, S', 'Cash on Delivery', '2023-04-06 18:51:29');
+INSERT INTO `orders` (`o_id`, `uid`, `p_name`, `phoneNumber`, `email`, `address`, `payment_mode`, `created_at`, `image`, `total`, `qty`, `price`, `p_id`) VALUES
+(22, 31, 'Asian Paints Pr', '8765456754', 'yedupj@gmail.com', 'NYC, Mangalore ', 'upiPayment', '2023-04-11 21:55:52', 'ap apex.jpeg', 2000, 2, 1000, 22),
+(23, 31, 'Asian Paints Pr', '8765456754', 'yedupj@gmail.com', 'NYC, Mangalore ', 'upiPayment', '2023-04-11 22:00:37', 'ap apex.jpeg', 1000, 1, 1000, 22);
 
 -- --------------------------------------------------------
 
@@ -150,26 +122,6 @@ CREATE TABLE `payments` (
   `Payment_Status` varchar(10) NOT NULL,
   `Bill_Invoice` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `payments`
---
-
-INSERT INTO `payments` (`Payment_Id`, `Amount`, `Date`, `Payment_Status`, `Bill_Invoice`) VALUES
-(1, 2834, '2023-04-03', '1', 'bla'),
-(2, 2834, '2023-04-03', '1', 'bla'),
-(3, 2834, '2023-04-03', '1', 'bla'),
-(4, 2834, '2023-04-03', '1', 'bla'),
-(5, 2834, '2023-04-03', '1', 'bla'),
-(6, 2834, '2023-04-03', '1', 'bla'),
-(7, 2834, '2023-04-03', '1', 'bla'),
-(8, 2834, '2023-04-03', '1', 'bla'),
-(9, 2834, '2023-04-03', '1', 'bla'),
-(10, 2834, '2023-04-03', '1', 'bla'),
-(11, 2834, '2023-04-03', '1', 'bla'),
-(12, 2834, '2023-04-03', '1', 'bla'),
-(13, 2834, '2023-04-03', '1', 'bla'),
-(14, 2834, '2023-04-03', '1', 'bla');
 
 -- --------------------------------------------------------
 
@@ -191,8 +143,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`p_id`, `product_name`, `image`, `price`, `description`, `qty`) VALUES
-(7, 'Python Hammer Home Kit 2G', 'hamm.png', 20, 'Made in India Ideal for DIY, Home Improvement, General Repa', 222),
-(15, 'Axe Pro Max', 'Screenshot 2023-04-06 174718.png', 10, ' Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim lobortis scelerisque fermentum dui faucibus in. Nisi porta lorem mollis aliquam ut porttitor. Nunc sed id semper risus in. Morbi tempus iaculis urna id. Turpis egestas integer eget aliquet nibh praesent. Vitae elementum curabitur vitae nunc sed velit dignissim sodales. ', 78);
+(22, 'Asian Paints Pro Max', 'ap apex.jpeg', 1000, ' apcolite gnml is good paint for your house', 99);
 
 -- --------------------------------------------------------
 
@@ -205,40 +156,37 @@ CREATE TABLE `users` (
   `username` varchar(20) NOT NULL,
   `password` varchar(15) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `address` varchar(35) NOT NULL,
-  `phoneNumber` int(10) NOT NULL
+  `address` varchar(40) NOT NULL,
+  `phoneNumber` varchar(10) NOT NULL,
+  `city` varchar(20) NOT NULL,
+  `pincode` int(10) NOT NULL,
+  `reset_token` varchar(100) DEFAULT NULL,
+  `reset_expiration` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`uid`, `username`, `password`, `email`, `address`, `phoneNumber`) VALUES
-(23, 'Liam Rodriguez', '12345678', 'liam.rodriguez@outlook.com', '789 Maple St, Portland, OR 97209', 243564645),
-(25, 'Olivia Thompson', '12345678', 'olivia.thompson@gmail.com', ' 123 Main St, Springfield, IL 62704', 896858943),
-(26, 'Emma Lee', 'asdfasdf', 'emma.lee@gmail.com', '222 Pine St, Seattle, WA 98101', 353454562);
+INSERT INTO `users` (`uid`, `username`, `password`, `email`, `address`, `phoneNumber`, `city`, `pincode`, `reset_token`, `reset_expiration`) VALUES
+(31, 'Yedu PJ', '12345678', 'yedupj@gmail.com', 'NYC, Mangalore Karnataka India', '8765456754', 'Karnataka', 767656, NULL, NULL);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `blacklistedusers`
---
-ALTER TABLE `blacklistedusers`
-  ADD PRIMARY KEY (`Uid`);
-
---
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`cart_id`);
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `p_id` (`p_id`);
 
 --
--- Indexes for table `customers`
+-- Indexes for table `feedback`
 --
-ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `feedback`
+  ADD KEY `username` (`username`);
 
 --
 -- Indexes for table `orders`
@@ -262,29 +210,24 @@ ALTER TABLE `products`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`uid`);
+  ADD PRIMARY KEY (`uid`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `blacklistedusers`
---
-ALTER TABLE `blacklistedusers`
-  MODIFY `Uid` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
 
 --
--- AUTO_INCREMENT for table `customers`
+-- AUTO_INCREMENT for table `orders`
 --
-ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34553326;
+ALTER TABLE `orders`
+  MODIFY `o_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -296,13 +239,29 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `p_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `p_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `products` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
