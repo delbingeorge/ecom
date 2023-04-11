@@ -538,3 +538,39 @@ footer div ul li a img {
 .alert h1 {
     font-size: 1rem;
 }
+
+.review-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 600px;
+    overflow-y: scroll;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    width: 50%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.comment img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment h1 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.comment .content {
+    font-size: 16px;
+}

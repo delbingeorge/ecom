@@ -55,23 +55,37 @@ if (!isset($_SESSION['admin_id'])) {
                $image_tmp_name = $image['tmp_name'];
                $image_size = $image['size'];
                $image_error = $image['error'];
-               $sqlall = "SELECT p_id FROM products";
-               $result = $conn->query($sqlall);
-               if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                         if ($row['p_id'] == $product_id) {
-                              $sql = "UPDATE products SET p_id='$product_id', product_name = '$product_name',image='$image',price = '$price',description='$des',qty = '$qty'  WHERE p_id = '$product_id';";
-                              if (mysqli_query($conn, $sql)) {
-                                   header('Location: manageProducts.php');
-                              } else {
-                                   echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+               $sqlall = "SELECT * FROM products";
+
+
+               if ($image_error === UPLOAD_ERR_OK) {
+                    $target_dir = 'uploads/';
+                    $target_file = $target_dir . basename($image_name);
+                    if (move_uploaded_file($image_tmp_name, $target_file)) {
+                         $result = $conn->query($sqlall);
+                         if ($result->num_rows > 0) {
+                              while ($row = $result->fetch_assoc()) {
+                                   if ($row['p_id'] == $product_id) {
+                                        $oldqty = $row['qty'];
+                                        $newqty = $oldqty + $qty;
+                                        $sql = "UPDATE products SET p_id='$product_id', product_name = '$product_name',image='$image_name',price = '$price',description='$des',qty = '$newqty'  WHERE p_id = '$product_id';";
+                                        if (mysqli_query($conn, $sql)) {
+                                             header('Location: manageProducts.php');
+                                        } else {
+                                             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                                        }
+                                   } else {
+                                        echo "No matching product found! <br> <a href='manageproducts.php'>Go Back</a>";
+                                   }
                               }
                          } else {
-                              echo "No matching product found! <br> <a href='manageproducts.php'>Go Back</a>";
+                              echo "Error: " . $sqlall . "<br>" . mysqli_error($conn);
                          }
+                    } else {
+                         echo "Error uploading image file";
                     }
                } else {
-                    echo "Error: " . $sqlall . "<br>" . mysqli_error($conn);
+                    echo "Error uploading image file";
                }
           }
 

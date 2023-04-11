@@ -21,6 +21,8 @@ if (!empty($_POST)) {
      $cpassword = isset($_POST['cpassword']) ? $_POST['cpassword'] : '';
      $address = isset($_POST['address']) ? $_POST['address'] : '';
      $contact = isset($_POST['contact']) ? $_POST['contact'] : '';
+     $city = isset($_POST['city']) ? $_POST['city'] : '';
+     $pincode = isset($_POST['pincode']) ? $_POST['pincode'] : '';
 
      try {
           // validate email
@@ -32,6 +34,8 @@ if (!empty($_POST)) {
                throw new Exception("Password must be at least 8 characters long");
           } elseif ($password != $cpassword) {
                throw new Exception("Passwords do not match");
+          } elseif (!preg_match("/^([0-9]{10,10})$/", $contact)) {
+               throw new Exception("enter a valid number");
           } else {
                // check if email already exists in database
                $email_exists_query = "SELECT * FROM users WHERE email = '$email'";
@@ -40,7 +44,7 @@ if (!empty($_POST)) {
                     throw new Exception("Email already exists");
                } else {
                     // insert user data into database
-                    $sql = "INSERT INTO users (username, email, password, address, PhoneNumber) VALUES ('$username', '$email', '$password', '$address', '$contact')";
+                    $sql = "INSERT INTO users (username, email, password, address, PhoneNumber,city,pincode) VALUES ('$username', '$email', '$password', '$address', '$contact','$city','$pincode')";
                     if (mysqli_query($conn, $sql)) {
                          header("Location:login.php");
                     } else {
@@ -80,6 +84,10 @@ mysqli_close($conn);
                     <input placeholder="delivery address" type="text" autocomplete="off" id="address" name="address" required>
                     <input placeholder="contact number" type="number" autocomplete="off" maxlength="10" id="contact" name="contact" required>
                </div>
+               <div class="form-div">
+                    <input placeholder="city" type="text" autocomplete="off" id="city" name="city" required>
+                    <input placeholder="pincode " type="number" autocomplete="off" maxlength="6" id="pincode" name="pincode" required>
+               </div>
                <input type="submit" value="Create Account">
                <?php if (isset($error_message)) { ?>
                     <p class="invalid-msg"><?php echo $error_message; ?></p>
@@ -88,6 +96,7 @@ mysqli_close($conn);
                     <a href="login.php">Already have an account?</a>
                </div>
           </form>
+     </div>
      </div>
 </body>
 

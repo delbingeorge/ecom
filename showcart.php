@@ -79,7 +79,7 @@ include './components/nav.php';
           <div>
           <h1><span>₹</span>" . $total_sum .  " </h1>
           </div>
-          <form method='POST' action='placeOrder.php'>
+          <form method='POST' action='paymentMode.php'>
           <button type='submit' class='add-to-cart-btn'>Place Order</button>
           </form>
           </div>";

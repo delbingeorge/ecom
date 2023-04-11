@@ -11,7 +11,8 @@ if (!isset($_SESSION['admin_id'])) {
 
 <head>
      <title>Manage Products</title>
-     <link rel="stylesheet" href="../style/admin-style.css">  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2713/2713537.png" type="image/x-icon">
+     <link rel="stylesheet" href="../style/admin-style.css">
+     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2713/2713537.png" type="image/x-icon">
 </head>
 
 <body>
@@ -33,7 +34,8 @@ if (!isset($_SESSION['admin_id'])) {
                <div class="show-items">
                     <h2>All Products</h2>
                     <?php
-                    // Set up database connection
+                    // Set up database 
+                    $script = "";
                     $servername = "localhost";
                     $username = "root";
                     $password = "";
@@ -85,23 +87,17 @@ if (!isset($_SESSION['admin_id'])) {
                               if ($row['p_id'] == $pid) {
                                    $sql = "DELETE FROM products WHERE p_id='$pid'";
                                    if (mysqli_query($conn, $sql)) {
-                                        echo "Product Removed!";
-                                        header('Location: manageProducts.php');
-                                        exit();
+                                        echo "<script>alert('Product Removed!')</script>";
+                                        echo "<script>window.location.href='manageProducts.php'</script>";
                                    } else {
-                                        echo "Failed to remove product!";
+                                        echo "<script>alert('Failed to remove product!');</script>";
                                    }
-                              } else {
-                                   echo "<script>alert(No matching product id found!)</script>";
                               }
                          }
-                    } else {
-                         echo "<script>alert(No product found!)</script>";
                     }
-
-                    // Close database connection
                     $conn->close();
                     ?>
+
                </div>
           </div>
 </body>

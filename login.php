@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      $username = 'root';
      $password = '';
      $dbname = 'craftsmendb';
+     $error_message = " ";
 
      try {
           $conn = new mysqli($host, $username, $password, $dbname);
@@ -21,30 +22,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                throw new Exception("Connection failed: " . $conn->connect_error);
           }
 
-          $stmt = $conn->prepare("SELECT uid, username, email, password FROM users WHERE email = ?");
+          $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
           $stmt->bind_param("s", $input_email);
           $stmt->execute();
           $result = $stmt->get_result();
 
-          if ($result->num_rows === 1) {
+          if ($result->num_rows == 1) {
                $row = $result->fetch_assoc();
                $db_uid = $row['uid'];
                $db_username = $row['username'];
                $db_email = $row['email'];
+               $contact = $row['phoneNumber'];
                $db_password = $row['password'];
+               $address = $row['address'];
 
                // Verify input password
-               if ($input_password == $db_password && $input_email === $db_email) {
+               if ($input_password == $db_password && $input_email == $db_email) {
                     $_SESSION['uid'] = $db_uid;
                     $_SESSION['username'] = $db_username;
+                    $_SESSION['contact'] = $contact;
                     $_SESSION['email'] = $db_email;
+                    $_SESSION['address'] = $address;
                     header('Location: index.php');
                     exit();
                } else {
-                    $error_message = "Invalid email or password";
+                    echo "<script>alert('Incorrect Password or Username.');</script>";
+                    echo "<script>window.location.href='login.php'</script>";
                }
           } else {
-               $error_message = "Invalid email or password";
+               echo "<script>alert('Incorrect Password or Username.');</script>";
+               echo "<script>window.location.href='login.php'</script>";
           }
 
           $conn->close();
@@ -78,7 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                }
                ?>
                <div class="log-div">
-                    <!-- <a href="forgotpass.php">forgot password!</a> -->
+                    <a href="forgotpass.php">forgot password?</a>
+                    <a href="admin/login.php">login as admin</a>
                     <a href="signup.php">create account</a>
                </div>
           </form>

@@ -57,7 +57,7 @@ if (!isset($_SESSION['admin_id'])) {
                          </tr>";
                          }
                     } else {
-                         echo "<tr><td colspan='4'>No results found.</td></tr>";
+                         echo "<tr><td colspan='6'>No results found.</td></tr>";
                     }
                     echo "</table>";
 

@@ -56,7 +56,7 @@ try {
 
      $o_id = uniqid("Order");
 
-     $sql = "INSERT INTO orders (o_id, u_id, transaction_info, p_name, phoneNumber, email, address, payment_mode, created_at)
+     $sql = "INSERT INTO orders (o_id, uid, transaction_info, p_name, phoneNumber, email, address, payment_mode, created_at)
           VALUES ('$o_id', '$uid', '$transaction_info', '$p_name', '$phone_number', '$email_id', '$address_info', '$payment_mode', NOW())";
 
      if ($conn->query($sql) === false) {
@@ -81,9 +81,6 @@ try {
 </head>
 
 <body>
-     <script>
-          alert("Order placed!");
-     </script>
      <div class="bill">
           <div class="bill-div">
                <div>
@@ -153,10 +150,10 @@ try {
                     $conn->close();
                     ?>
                </table>
-               <!-- <div> -->
-               <!-- <a href="generate-pdf.php" class="add-to-cart-btn" target="_blank">Download PDF</a> -->
-               <!-- <a href="checkout.php" class='add-to-cart-btn'>Check Out</a> -->
-               <!-- </div> -->
+               <div>
+                    <!-- <a href="generate-pdf.php" class="add-to-cart-btn" target="_blank">Download PDF</a> -->
+                    <a href="checkout.php" class='add-to-cart-btn'>Check Out</a>
+               </div>
 
           </div>
      </div>

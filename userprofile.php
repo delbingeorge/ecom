@@ -69,10 +69,10 @@ if (!isset($_SESSION['uid'])) {
                <a class="add-to-cart-btn" href="delete-profile.php">Delete Account</a>
           </div>
 
-          <div style="text-align: center;">
-               <h1 style="margin-top:2rem;">Past Orders</h1>
+          <h1 style="margin-top:2rem;">Past Orders</h1>
+          <div style="text-align: center; display:flex;  align-items:center; justify-content: center; flex-direction:row;">
                <?php
-               $sql = "SELECT * FROM orders WHERE u_id='$uid'";
+               $sql = "SELECT * FROM orders WHERE uid='$uid'";
                $result = $conn->query($sql);
                if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
@@ -80,14 +80,8 @@ if (!isset($_SESSION['uid'])) {
                          echo "
                     <div class='product-card'>
                          <img src='" . $image_path . "'/>
-                         <h1 class='product-name'>" . $row['product_name'] . "</h1>
-                         <h2 class='product-price'> ₹" . $row['price'] . "</h2>
+                         <h1 class='product-name'>" . $row['p_name'] . "</h1>
                          <div class='btn-grp'>
-                              <form method='POST' action='cart.php'>
-                                   <input type='hidden' name='qty' value='1'>
-                                   <input type='hidden' name='pid' value='" . $row["p_id"] . "'>
-                                   <button type='submit' class='add-to-cart-btn'>Add To Cart</button>
-                              </form>
                               <form method='POST' action='product-details.php'>
                                    <input type='hidden' name='pid' value='" . $row["p_id"] . "'>
                                    <button type='submit' class='view-dtls-btn'>View Details</button>

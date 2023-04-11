@@ -1,7 +1,6 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
-     // If admin user is not logged in, redirect to login page
      header('Location: login.php');
      exit();
 }
@@ -33,11 +32,9 @@ if (!isset($_SESSION['admin_id'])) {
                $dbname = "craftsmendb";
                $conn = new mysqli($servername, $username, $password, $dbname);
 
-               // Query the database for the latest 10 items in the orders table
                $sql = "SELECT * FROM orders ORDER BY created_at DESC LIMIT 10";
                $result = $conn->query($sql);
 
-               // Display the results in an HTML table
                echo "<table class='order-news'>";
                echo "<tr>
                <th>Order ID</th>
@@ -46,16 +43,18 @@ if (!isset($_SESSION['admin_id'])) {
                <th>Order Date</th>
                <th>Quantity</th>
                <th>Total</th>
+               <th>Address</th>
                </tr>";
                if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                          echo "<tr class='order-res'>
                          <td>" . $row["o_id"] . "</td>
-                         <td>" . $row["u_id"] . "</td>
+                         <td>" . $row["uid"] . "</td>
                          <td>" . $row["p_name"] . "</td>
                          <td>" . $row["created_at"] . "</td>
+                         <td>" . $row["qty"] . "</td>
+                         <td>" . $row["total"] . "</td>
                          <td>" . $row["address"] . "</td>
-                         <td>" . $row["phoneNumber"] . "</td>
                          </tr>";
                     }
                } else {
