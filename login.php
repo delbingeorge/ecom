@@ -46,12 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header('Location: index.php');
                     exit();
                } else {
-                    echo "<script>alert('Incorrect Password or Username.');</script>";
-                    echo "<script>window.location.href='login.php'</script>";
+                    $error_message = "inc pass";
+                    // echo "<script>alert('Incorrect Password or Username.');</script>";
+                    // echo "<script>window.location.href='login.php'</script>";
                }
           } else {
-               echo "<script>alert('Incorrect Password or Username.');</script>";
-               echo "<script>window.location.href='login.php'</script>";
+               $error_message = "not found";
+               // echo "<script>alert('Incorrect Password or Username.');</script>";
+               // echo "<script>window.location.href='login.php'</script>";
           }
 
           $conn->close();
