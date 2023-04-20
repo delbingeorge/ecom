@@ -54,8 +54,6 @@ if (isset($_POST['submit'])) {
                VALUES ('$uid', '$product_name', '$contact', '$email', '$address', '$payment_mode', '$quantity', '$image', '$total', NOW(),'$price','$p_id')";
           mysqli_query($conn, $query);
      }
-     $query = "DELETE FROM cart WHERE uid = '$uid'";
-     mysqli_query($conn, $query);
      if ($payment_mode == "upiPayment") {
           header("Location: upiPayment.php");
      } elseif ($payment_mode == "creditCard") {
