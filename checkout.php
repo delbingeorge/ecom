@@ -4,7 +4,6 @@ if (!isset($_SESSION['uid'])) {
      header("Location: login.php");
      exit();
 }
-
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -14,8 +13,10 @@ $uid = $_SESSION['uid'];
 if ($conn->connect_error) {
      die("Connection failed: " . $conn->connect_error);
 }
+$uid = $_SESSION['uid'];
+$query = "DELETE FROM cart WHERE uid = '$uid'";
+mysqli_query($conn, $query);
 $query = isset($_GET['query']) ? $_GET['query'] : '';
-
 $sql = "SELECT SUM(total) as total_sum FROM cart WHERE uid='$uid';";
 $result = $conn->query($sql);
 
